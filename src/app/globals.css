@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+/* ============================================================
+   GLOBAL STYLES — Scroll-Driven Hero Animation
+   ============================================================ */
+
+/* ---------- CSS Custom Properties ---------- */
+:root {
+  --color-bg: #0a0a0a;
+  --color-fg: #ededed;
+  --color-accent: #45db7d;
+  --color-accent-dim: rgba(69, 219, 125, 0.15);
+  --color-muted: #888888;
+  --color-surface: #1a1a1a;
+  --color-road: #1e1e1e;
+  --color-track-bg: #d1d1d1;
+  --font-display: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+/* ---------- Base Resets ---------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto; /* We manage scroll with GSAP, not CSS smooth-scroll */
+}
+
+body {
+  color: var(--color-fg);
+  background: var(--color-bg);
+  font-family: var(--font-display);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- Selection ---------- */
+::selection {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 3px;
+}
+
+/* ---------- Utility Animations ---------- */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(69, 219, 125, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(69, 219, 125, 0.4);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ---------- Road Marking Animation ---------- */
+@keyframes dash-move {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-80px);
+  }
+}
+
+.road-markings {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: calc(100% + 80px);
+  height: 3px;
+  transform: translateY(-50%);
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.3) 0px,
+    rgba(255, 255, 255, 0.3) 30px,
+    transparent 30px,
+    transparent 80px
+  );
+  animation: dash-move 0.8s linear infinite;
+  animation-play-state: paused;
+}
+
+.road-markings.animating {
+  animation-play-state: running;
+}
